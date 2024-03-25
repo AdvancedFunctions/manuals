@@ -1,0 +1,106 @@
+[
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-1/overview/",
+	"title": "Overview",
+	"tags": [],
+	"description": "",
+	"content": "Stingray WF 1.0 Browser-Programmable WiFi Microcontroller Overview The microcontroller is programmable using any browser. The microcontroller also comes with its own on-board battery and battery charger that provides both 5V and 3.3V, eliminating the need for external power sources.\n"
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-2/sample-program-overview/",
+	"title": "Overview",
+	"tags": [],
+	"description": "",
+	"content": "Instructions for Blinking the On-Board LED Overview This guide illustrates the process to enable the on-board LED on your Stingray device to blink at one-second intervals. No additional components are required for this task.\n"
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/",
+	"title": "Stingray Microcontrollers",
+	"tags": [],
+	"description": "",
+	"content": "The Microcontroller For The Classroom Stingray Microcontrollers the battery powered, web-browser programmable microcontrollers\n"
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/",
+	"title": "Stingray WF 1.0",
+	"tags": [],
+	"description": "",
+	"content": "Stingray WF 1.0 "
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-1/",
+	"title": "User Manual",
+	"tags": [],
+	"description": "",
+	"content": "User Manual "
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-1/charging/",
+	"title": "Charging",
+	"tags": [],
+	"description": "",
+	"content": "Charging Simply plug a USB Micro B plug into the micro-controller and switch the \u0026lsquo;Charge Switch\u0026rsquo; to \u0026lsquo;ON\u0026rsquo;. The \u0026lsquo;Charging LED\u0026rsquo; indicator will light red, while the \u0026lsquo;Fully Charged LED\u0026rsquo; will remain off. Once fully charged, the \u0026lsquo;Fully Charged LED\u0026rsquo; indicator will light green, and the \u0026lsquo;Charging LED\u0026rsquo; will turn off. Set the \u0026lsquo;Charge Switch\u0026rsquo; to \u0026lsquo;OFF\u0026rsquo; to power the microcontroller with its onboard battery. The microcontroller may be used during charging.\n"
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-2/sample-program-connect-to-internet/",
+	"title": "Connecting to The Internet",
+	"tags": [],
+	"description": "",
+	"content": "Connecting Your Stingray to the Internet Ensure that the \u0026lsquo;Charging Switch\u0026rsquo; is set to the OFF position. Using a smartphone, computer, or tablet, locate and connect to the Stingray access point with the same IP address as your device. After successfully connecting to the Stingray access point, open your web browser and enter your device\u0026rsquo;s IP address into the address bar. Provide the SSID and password for a Wi-Fi network to establish internet connectivity. For optimal performance, connect your Stingray to a Wi-Fi network with fewer connected devices, such as a smartphone\u0026rsquo;s hotspot. This can help avoid potential network issues.\n"
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-2/",
+	"title": "Sample Program",
+	"tags": [],
+	"description": "",
+	"content": "Sample Program Blinking The Onboard LED "
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-1/burning-the-ota/",
+	"title": "Burning The OTA",
+	"tags": [],
+	"description": "",
+	"content": "Uploading the OTA program to a new Stingray WF1.0 with an Arduino UNO Connect an Arduino UNO to a computer and upload a sketch with an empty setup and loop method. Connect the GND of the Arduino to the GND of the Stingray. Connect Tx of the Arduino to Tx of the Stingray and connect Rx of the Arduino to the Rx of the Stingray. Connect a 330-ohm resistor to GND and connect the other terminal to a free wire. Connect another free wire to GND. Set the board of Arduino Sketch to NodeMCU 1.0 (ESP-12E Module). Put the microcontroller into programming mode by holding the free GND wire on the pin of the WiFi module, that is closest to the pin that says Rx on the Stingray. Insert the free wire coming from the 330-ohm resistor into D4. Wait 2 seconds. Remove the free GND wire from the WiFi module followed by removing the wire from D4. Set the ipAd1 to ipAd4 int variables in the [[Default Stingray WF1.0 OTA File|Default-Stingray-WF1.0-OTA-File]] to serve as the \u0026lsquo;Device ID\u0026rsquo; and the homepage of the Stingray WF1.0 microcontroller. E.g., The code: int ipAd1=192; int ipAd2=168; int ipAd3=4; int ipAd4=12; will configure the \u0026lsquo;Device ID\u0026rsquo; as 192.168.4.12 and set the homepage of the Stingray WF1.0 microcontroller to http://192.168.4.12/.\nCompile and upload the Default Stingray WF1.0 OTA File to the Stingray WF1.0 microcontroller. "
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-2/sample-program-code/",
+	"title": "Code",
+	"tags": [],
+	"description": "",
+	"content": "Blink Program Copy and paste this code into the Stingray Browser Compiler.\n// C++ code // void setup() { pinMode(5, OUTPUT); } void loop() { digitalWrite(5, HIGH); delay(1000); // Wait for 1000 millisecond(s) digitalWrite(5, LOW); delay(1000); // Wait for 1000 millisecond(s) } "
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-1/connecting-to-the-internet/",
+	"title": "Connecting to The Internet",
+	"tags": [],
+	"description": "",
+	"content": "Setting Up the Stingray Module to Upload Code to the Microcontroller Using a phone, tablet, or computer, scan the WiFi network for wireless access points. A Stingray should be visible. Click it and connect to it. In a browser, enter the provided IP address of the Stingray. Enter the SSID of the hotspot to give the Stingray access to the internet. "
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-1/programming-the-microcontroller/",
+	"title": "Programming The Microcontroller",
+	"tags": [],
+	"description": "",
+	"content": "Programming the microcontroller Go to the Stingray Browser Compiler. Enter the provided IP address of the Stingray in \u0026lsquo;Device ID\u0026rsquo;. Create or change a program using block coding, or paste or write code that would have been written for Arduino Sketch. Click the checkbox to set the mode of upload. The code \u0026ldquo;freezes\u0026rdquo; for the first 10 seconds to poll for updates once the microcontroller has been switched on.\nClick \u0026lsquo;Compile and Upload\u0026rsquo;. If the code is incorrect, it will not compile.\nA status will show the progress of compiling and burning the code onto the microcontroller in the output console. It will display \u0026ldquo;Approximate loading time remaining: %\u0026rdquo;. Never switch the charge switch until the \u0026lsquo;Approximate loading time remaining\u0026rsquo; reaches 0%. Doing so may cause the firmware to crash, which would require uploading the firmware again.\nA rapidly flashing blue light on the Stingray indicates that the Stingray will attempt to begin requesting this compiled file. Note: once a file is found, the blue light will stop flashing, and it will take about 20 seconds for the new program to be burnt onto the microcontroller. If the compiled file is not uploading, you may need to refresh the \u0026lsquo;Stingray Browser Compiler\u0026rsquo; page and try again.\n"
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/wf-1.0/chapter-1/schematics/",
+	"title": "Hardware Schematics",
+	"tags": [],
+	"description": "",
+	"content": "Schematics "
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://advancedfunctions.github.io/manuals/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
