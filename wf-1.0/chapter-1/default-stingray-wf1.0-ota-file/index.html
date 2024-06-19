@@ -8,7 +8,7 @@
 
 
     
-    <title>Stingray WF 1.0 :: Manuals</title>
+    <title>Default OTA File :: Manuals</title>
 
     
     <link href="/manuals/css/nucleus.css?1718834401" rel="stylesheet">
@@ -36,7 +36,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/manuals/wf-1.0/">
+  <body class="" data-url="/manuals/wf-1.0/chapter-1/default-stingray-wf1.0-ota-file/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -360,8 +360,8 @@ Manuals"
   
     
     <li data-nav-id="/manuals/wf-1.0/" title="Stingray WF 1.0" class="dd-item
+        parent
         
-        active
         
         ">
       <a href="/manuals/wf-1.0/">
@@ -391,7 +391,7 @@ Manuals"
   
     
     <li data-nav-id="/manuals/wf-1.0/chapter-1/" title="User Manual" class="dd-item
-        
+        parent
         
         
         ">
@@ -591,7 +591,7 @@ Manuals"
     
     <li data-nav-id="/manuals/wf-1.0/chapter-1/default-stingray-wf1.0-ota-file/" title="Default OTA File" class="dd-item
         
-        
+        active
         
         ">
       <a href="/manuals/wf-1.0/chapter-1/default-stingray-wf1.0-ota-file/">
@@ -791,6 +791,8 @@ Manuals"
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -801,7 +803,19 @@ Manuals"
             
           
           
-            <a href='/manuals/'>Stingray Microcontrollers</a> > Stingray WF 1.0
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='/manuals/'>Stingray Microcontrollers</a> > <a href='/manuals/wf-1.0/'>Stingray WF 1.0</a> > <a href='/manuals/wf-1.0/chapter-1/'>User Manual</a> > Default OTA File
+          
+        
+          
+        
           
         
           
@@ -810,6 +824,21 @@ Manuals"
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#default-stingray-wf10-ota-file">Default Stingray WF1.0 OTA File</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -817,17 +846,249 @@ Manuals"
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Default OTA File
+            </h1>
           
 
         
 
 
 
-	<h1 id="stingray-wf-10">Stingray WF 1.0</h1>
-
+	<h3 id="default-stingray-wf10-ota-file">Default Stingray WF1.0 OTA File</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Set the 4 int variables to which serves as the device name and the local ip address of the Access Point
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> ipAd1<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> ipAd2<span style="color:#f92672">=</span><span style="color:#ae81ff">168</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> ipAd3<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> ipAd4<span style="color:#f92672">=</span><span style="color:#ae81ff">87</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;EEPROM.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ESP8266WiFi.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ESP8266httpUpdate.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ESP8266HTTPClient.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ESP8266WebServer.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>String accessPointSsid <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Stingray &#34;</span><span style="color:#f92672">+</span>String(ipAd1)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">+</span>String(ipAd2)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">+</span>String(ipAd3)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">+</span>String(ipAd4);
+</span></span><span style="display:flex;"><span>String accessPointPassword <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;11111111&#34;</span>;
+</span></span><span style="display:flex;"><span>String deviceName <span style="color:#f92672">=</span> String(ipAd1)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">+</span>String(ipAd2)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">+</span>String(ipAd3)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;.&#34;</span><span style="color:#f92672">+</span>String(ipAd4);
+</span></span><span style="display:flex;"><span>String ssidEntered;
+</span></span><span style="display:flex;"><span>String passwordEntered;
+</span></span><span style="display:flex;"><span>String compiledFileHeader;
+</span></span><span style="display:flex;"><span>WiFiClient clientInfo;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>IPAddress <span style="color:#a6e22e">local_IP</span>(ipAd1, ipAd2, ipAd3, ipAd4);
+</span></span><span style="display:flex;"><span>IPAddress <span style="color:#a6e22e">gateway</span>(<span style="color:#ae81ff">192</span>, <span style="color:#ae81ff">168</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">9</span>);
+</span></span><span style="display:flex;"><span>IPAddress <span style="color:#a6e22e">subnet</span>(<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ESP8266WebServer <span style="color:#a6e22e">server</span>(<span style="color:#ae81ff">80</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * On the server, the commented code is uncommented.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span>()
+</span></span><span style="display:flex;"><span>{ Serial.begin(<span style="color:#ae81ff">9600</span>);
+</span></span><span style="display:flex;"><span>  otaSetup();
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//ewiowpj();
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * On the server, the commented code is uncommented.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">loop</span>() {
+</span></span><span style="display:flex;"><span>  otaLoop();
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//vsaiopwij();
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  * Loads EEPROM WIfi credentials and emptyFile.txt header and connects to Wifi Hotspot
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">  */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">otaSetup</span>() {
+</span></span><span style="display:flex;"><span>  Serial.println(<span style="color:#e6db74">&#34;in here&#34;</span>);
+</span></span><span style="display:flex;"><span>  setupAccessPoint();
+</span></span><span style="display:flex;"><span>  setupServerHandles();
+</span></span><span style="display:flex;"><span>  getUpdateHeaderFromEEPROM();
+</span></span><span style="display:flex;"><span>  Serial.println(<span style="color:#e6db74">&#34;Got EEPROM HEADER&#34;</span>);
+</span></span><span style="display:flex;"><span>  getHotSpotCredentialsFromEEPROM();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Performs upload and burning of new OTA program once available
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> initialTime <span style="color:#f92672">=</span> millis();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">otaLoop</span>() {
+</span></span><span style="display:flex;"><span>  server.handleClient();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (millis() <span style="color:#f92672">-</span> initialTime <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1000</span>) {
+</span></span><span style="display:flex;"><span>    checkForNewCompiledFileAndUpload();
+</span></span><span style="display:flex;"><span>    initialTime <span style="color:#f92672">=</span> millis();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Checks for new compiled files and begins the upload and burning process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">checkForNewCompiledFileAndUpload</span>() {
+</span></span><span style="display:flex;"><span>  Serial.println(<span style="color:#e6db74">&#34;compiling&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> rfidWebAddress[] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;24.206.15.96&#34;</span>;
+</span></span><span style="display:flex;"><span>  String currentCompiledFileHeader <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>  Serial.println(WiFi.status());
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (clientInfo.connect(rfidWebAddress, <span style="color:#ae81ff">8080</span>)) {
+</span></span><span style="display:flex;"><span>    Serial.println(<span style="color:#e6db74">&#34;connected&#34;</span>);
+</span></span><span style="display:flex;"><span>    clientInfo.print(<span style="color:#e6db74">&#34;GET /&#34;</span> <span style="color:#f92672">+</span> deviceName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/emptyFile.txt HTTP/1.1</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    clientInfo.print(<span style="color:#e6db74">&#34;Host: 24.206.15.96</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    clientInfo.print(<span style="color:#e6db74">&#34;Connection: close</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    clientInfo.println();
+</span></span><span style="display:flex;"><span>    delay(<span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> timeTaken <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>clientInfo.available()) {
+</span></span><span style="display:flex;"><span>      Serial.print(<span style="color:#e6db74">&#34;gettingData: &#34;</span>);
+</span></span><span style="display:flex;"><span>      Serial.println(timeTaken);
+</span></span><span style="display:flex;"><span>      timeTaken<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> compiledFileSizeToRead <span style="color:#f92672">=</span> <span style="color:#ae81ff">300</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (clientInfo.available() <span style="color:#f92672">&amp;&amp;</span> compiledFileSizeToRead <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">char</span> dataAsChar <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span>)clientInfo.read();
+</span></span><span style="display:flex;"><span>      currentCompiledFileHeader <span style="color:#f92672">+=</span> dataAsChar;
+</span></span><span style="display:flex;"><span>      compiledFileSizeToRead<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    Serial.println(currentCompiledFileHeader);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (compiledFileHeader <span style="color:#f92672">!=</span> currentCompiledFileHeader <span style="color:#f92672">&amp;&amp;</span> currentCompiledFileHeader <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+</span></span><span style="display:flex;"><span>      WiFiClient client;
+</span></span><span style="display:flex;"><span>      compiledFileHeader <span style="color:#f92672">=</span> currentCompiledFileHeader;
+</span></span><span style="display:flex;"><span>      saveUpdateHeaderToEEPROM();
+</span></span><span style="display:flex;"><span>      delay(<span style="color:#ae81ff">7000</span>);
+</span></span><span style="display:flex;"><span>      ESPhttpUpdate.update(client, <span style="color:#e6db74">&#34;http://24.206.15.96:8080/&#34;</span> <span style="color:#f92672">+</span> deviceName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#f92672">+</span> deviceName <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.ino.bin&#34;</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   Set which page to load from ESP
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setupServerHandles</span>() {
+</span></span><span style="display:flex;"><span>  server.on(<span style="color:#e6db74">&#34;/&#34;</span>, HTTP_GET, connectToHotspotGUI);
+</span></span><span style="display:flex;"><span>  server.on(<span style="color:#e6db74">&#34;/connectToHotspot&#34;</span>, HTTP_POST, connectToHotspot);
+</span></span><span style="display:flex;"><span>  server.on(<span style="color:#e6db74">&#34;/hotspotConnectingStatus&#34;</span>, HTTP_GET, hotspotConnectingStatus);
+</span></span><span style="display:flex;"><span>  server.begin();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Displays connect ot Hotspot page
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">connectToHotspotGUI</span>() {
+</span></span><span style="display:flex;"><span>  String connectToHotspotGUIStatus <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (WiFi.status() <span style="color:#f92672">==</span> WL_CONNECTED) {
+</span></span><span style="display:flex;"><span>    connectToHotspotGUIStatus <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Status: Connected to &#34;</span> <span style="color:#f92672">+</span> ssidEntered <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;hr&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    connectToHotspotGUIStatus <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Status: Disconnected&lt;hr&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  server.send(<span style="color:#ae81ff">200</span>, <span style="color:#e6db74">&#34;text/html&#34;</span>, <span style="color:#e6db74">&#34;&lt;html&gt;&lt;meta content=&#39;width=device-width, initial-scale=1.0, user-scalable=0&#39; name=&#39;viewport&#39; /&gt;&lt;body &gt;&lt;div style=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">font:14px Calibri;text-align:center;background-color:rgba(200,200,200,0.7);-moz-border-radius:2vw;-webkit-border-radius:2vw;border-radius:2vw;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);padding:5vh 5vh;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&gt;&#34;</span> <span style="color:#f92672">+</span> connectToHotspotGUIStatus <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;h2 style=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">padding:2vh;margin:2vh;margin-left:0px;font:14px Calibri</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&gt;Connect To A New Hotspot&lt;/h2&gt;&lt;form action=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">/connectToHotspot</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> method=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">POST</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&gt;  &lt;input type=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">text</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> name=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">ssid</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> placeholder=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">SSID</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> style=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">padding:2vh;margin:2vh;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&gt;&lt;br&gt;  &lt;input type=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">password</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> name=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">password</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> placeholder=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">Password</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> style=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">padding:2vh;margin:2vh;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&gt;&lt;br&gt;  &lt;input type=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">submit</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> value=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">Connect</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> style=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">padding:2vh;margin:2vh;font:20px Calibri;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;border-color:blue;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&gt;&lt;/form&gt; &lt;/div&gt;&lt;/body&gt;&lt;/html&gt;&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> hotspotConnectionAttemptCounter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Displays connecting status page
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">hotspotConnectingStatus</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (WiFi.status() <span style="color:#f92672">!=</span> WL_CONNECTED) {
+</span></span><span style="display:flex;"><span>    hotspotConnectionAttemptCounter<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (hotspotConnectionAttemptCounter <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">10</span>) {
+</span></span><span style="display:flex;"><span>      connectToHotspotGUI();
+</span></span><span style="display:flex;"><span>      hotspotConnectionAttemptCounter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      server.send(<span style="color:#ae81ff">200</span>, <span style="color:#e6db74">&#34;text/html&#34;</span>, <span style="color:#e6db74">&#34;&lt;html&gt;&lt;meta content=&#39;width=device-width, initial-scale=1.0, user-scalable=0&#39; name=&#39;viewport&#39; /&gt;&lt;body onload=&#39;javascript:checkStatus()&#39;&gt;&lt;div style=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">font:40px Calibri;text-align:center;background-color:rgba(200,200,200,0.7);-moz-border-radius:2vw;-webkit-border-radius:2vw;border-radius:2vw;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);padding:5vh 5vh;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&gt;&lt;h2 style=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">padding:2vh;margin:2vh;margin-left:0px;font:20px Calibri</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74"> id=&#39;connectionStatus&#39;&gt;Connecting.&amp;nbsp;&lt;/h2&gt;&lt;/div&gt;&lt;/body&gt;&lt;script&gt;function checkStatus(){setTimeout(function(){document.getElementById(&#39;connectionStatus&#39;).innerHTML=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">Connecting..</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">},1000);setTimeout(function(){window.location.replace(</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">/hotspotConnectingStatus</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">)},2000);}&lt;/script&gt;&lt;/html&gt;&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//WiFi is connected
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    saveHotSpotCredentialsToEEPROM();
+</span></span><span style="display:flex;"><span>    connectToHotspotGUI();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Saves SSID and Password to EEPROM
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">saveHotSpotCredentialsToEEPROM</span>() {
+</span></span><span style="display:flex;"><span>  EEPROM.begin(<span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>  EEPROM.put(<span style="color:#ae81ff">0</span>, ssidEntered.length());
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> ssidEntered.length(); i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    EEPROM.put(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, ssidEntered.charAt(i));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  EEPROM.put(ssidEntered.length() <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, passwordEntered.length());
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> passwordEntered.length(); i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    EEPROM.put(ssidEntered.length() <span style="color:#f92672">+</span> i <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>, passwordEntered.charAt(i));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  EEPROM.commit();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Gets SSID and Password to EEPROM
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">getHotSpotCredentialsFromEEPROM</span>() {
+</span></span><span style="display:flex;"><span>  ssidEntered <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>  passwordEntered <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> eePROMCharToRead;
+</span></span><span style="display:flex;"><span>  EEPROM.begin(<span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>  byte eepromSsidLength <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  EEPROM.get(<span style="color:#ae81ff">0</span>, eepromSsidLength);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> eepromSsidLength; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    EEPROM.get(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, eePROMCharToRead);
+</span></span><span style="display:flex;"><span>    ssidEntered <span style="color:#f92672">+=</span> eePROMCharToRead;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  byte eepromPasswordLength <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  EEPROM.get(eepromSsidLength <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, eepromPasswordLength);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> eepromPasswordLength; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    EEPROM.get(eepromSsidLength <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> i, eePROMCharToRead);
+</span></span><span style="display:flex;"><span>    passwordEntered <span style="color:#f92672">+=</span> eePROMCharToRead;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  WiFi.begin(ssidEntered, passwordEntered);
+</span></span><span style="display:flex;"><span>  delay(<span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Saves emptyFile.txt file header
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">saveUpdateHeaderToEEPROM</span>() {
+</span></span><span style="display:flex;"><span>  EEPROM.begin(<span style="color:#ae81ff">400</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">300</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    EEPROM.put(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">50</span>, compiledFileHeader.charAt(i));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  EEPROM.commit();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Gets emptyFile.txt file header to check if new file avaiable for download
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">getUpdateHeaderFromEEPROM</span>() {
+</span></span><span style="display:flex;"><span>  compiledFileHeader <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> eePROMCharToRead;
+</span></span><span style="display:flex;"><span>  EEPROM.begin(<span style="color:#ae81ff">400</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">300</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    EEPROM.get(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">50</span>, eePROMCharToRead);
+</span></span><span style="display:flex;"><span>    compiledFileHeader <span style="color:#f92672">+=</span> eePROMCharToRead;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  delay(<span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Connects to Hotspot to give access to the internet
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">connectToHotspot</span>() {
+</span></span><span style="display:flex;"><span>  ssidEntered <span style="color:#f92672">=</span> server.arg(<span style="color:#e6db74">&#34;ssid&#34;</span>);
+</span></span><span style="display:flex;"><span>  passwordEntered <span style="color:#f92672">=</span> server.arg(<span style="color:#e6db74">&#34;password&#34;</span>);
+</span></span><span style="display:flex;"><span>  WiFi.begin(ssidEntered, passwordEntered);
+</span></span><span style="display:flex;"><span>  hotspotConnectingStatus();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">   Set ESP as Access Point
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setupAccessPoint</span>() {
+</span></span><span style="display:flex;"><span>  WiFi.softAPConfig(local_IP, gateway, subnet);
+</span></span><span style="display:flex;"><span>  WiFi.softAP(accessPointSsid, accessPointPassword);
+</span></span><span style="display:flex;"><span>  WiFi.softAPIP();
+</span></span><span style="display:flex;"><span>  server.begin();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 
 
 
@@ -836,8 +1097,6 @@ Manuals"
 	
 </footer>
 
-        
-            </div> 
         
         </div>
         
@@ -885,8 +1144,6 @@ Manuals"
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -902,6 +1159,9 @@ Manuals"
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -999,6 +1259,7 @@ Manuals"
             
                 
                     
+                    
                 
                 
 
@@ -1017,6 +1278,9 @@ Manuals"
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1091,10 +1355,10 @@ Manuals"
 	 
 	 
 		
-			<a class="nav nav-prev" href="/manuals/" title="Stingray Microcontrollers"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/manuals/wf-1.0/chapter-1/schematics/" title="Hardware Schematics"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/manuals/wf-1.0/chapter-1/" title="User Manual" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/manuals/wf-1.0/chapter-2/" title="Sample Program" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
